@@ -23,17 +23,24 @@ namespace AIBotProblem {
         }
 
         private void Update() {
-            for (int i = 0; i < botButtons.Length; i++) {
-                if (RectTransformUtility.RectangleContainsScreenPoint(botButtons[i], Input.mousePosition, Camera.main)) {
-                    if (i < bots.Count) {
-                        bots[i].hoverEffect.SetActive(true);
-                    }
-                } else {
-                    if (i < bots.Count) {
-                        bots[i].hoverEffect.SetActive(false);
-                    }
+            foreach (Bot bot in bots) {
+                bot.hoverEffect.SetActive(false);
+            }
+
+            RaycastHit hit;
+            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit);
+            if (hit.collider != null && hit.collider.name.Equals("IOCollider")) {
+                string name = hit.collider.transform.parent.name;
+                bool isIn = name.StartsWith("In");
+                int num = isIn ? int.Parse(name.Substring(2)) : int.Parse(name.Substring(3));
+                if (isIn && num < bots.Count) {
+                    bots[num].hoverEffect.SetActive(true);
+                }
+                if (Input.GetButtonDown("Interact")) {
+                    Click(num + (isIn ? 0 : 6));
                 }
             }
+            
             if (line != null) {
                 if (Input.GetButton("Interact Secondary")) {
                     if (lastIn) {

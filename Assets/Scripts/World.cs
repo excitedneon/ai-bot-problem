@@ -47,18 +47,20 @@ namespace AIBotProblem {
             "#          #\n" +
             "############\n",
 
-            "###############\n" +
-            "#         #   #\n" +
-            "# b    sy d   #\n" +
-            "#      |  #   #\n" +
-            "#####  |  #####\n" +
-            "#   #--+  #vvvv\n" +
-            "# b d  y  #vvvv\n" +
-            "#   #     #vvvv\n" +
-            "#####     #vvvv\n" +
-            "vvvv# xrx #vvvv\n" +
-            "vvvv#     #vvvv\n" +
-            "vvvv#######vvvv\n"
+            "##############\n" +
+            "#        #   #\n" +
+            "# b    syd r #\n" +
+            "#      +-#   #\n" +
+            "#####  | #####\n" +
+            "#   #--+  #vvv\n" +
+            "# b d  y  #vvv\n" +
+            "#   #     #vvv\n" +
+            "##### #####vvv\n" +
+            "vvvv#     #vvv\n" +
+            "vvvv##### #vvv\n" +
+            "vvvv#xr   #vvv\n" +
+            "vvvv# x   #vvv\n" +
+            "vvvv#######vvv\n"
         };
 
         public GameObject[] tilePrefabs;
@@ -68,7 +70,7 @@ namespace AIBotProblem {
 
         public ConnectionBoard connectionBoard;
 
-        private int currentLevel = 0;
+        private int currentLevel = 4;
         private Dictionary<PathDesc, List<Vector2>> cachedPaths = new Dictionary<PathDesc, List<Vector2>>();
         private WorldTile[] grid;
         private bool[] powerGrid;
@@ -230,7 +232,6 @@ namespace AIBotProblem {
         }
 
         public void SpreadPower(Vector2 pos, bool powerOn) {
-            Debug.Log("Powered (" + powerOn + ") on: " + pos);
             powerGrid[(int)pos.x + (int)pos.y * width] = powerOn;
             foreach (Vector2 neighbor in GetNeighborPositions(pos, true)) {
                 int index = (int)neighbor.x + (int)neighbor.y * width;
