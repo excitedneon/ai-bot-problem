@@ -109,7 +109,7 @@ namespace AIBotProblem {
             } else {
                 lastIn = isIn;
                 lastNum = num;
-                if (line == null && createdLines[n] == null) {
+                if (line == null && createdLines[n] == null && (!isIn || num < bots.Count)) {
                     GameObject newLine = Instantiate(linePrefab);
                     line = newLine.GetComponent<LineRenderer>();
                     line.positionCount = 2;
