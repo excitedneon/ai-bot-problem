@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4473228614794890}
   - component: {fileID: 212366187036577242}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tileset_9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4015735901519106}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WireOmni
   m_TagString: Untagged
   m_Icon: {fileID: 0}

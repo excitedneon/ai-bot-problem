@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4390898159867308}
   - component: {fileID: 114878120924473770}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,13 +36,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4585489270037766}
   - component: {fileID: 212783384365336190}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Notifier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1755474742073346
 GameObject:
   m_ObjectHideFlags: 0
@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4836278633985252}
   - component: {fileID: 212674960960225464}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

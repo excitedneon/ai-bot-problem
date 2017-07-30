@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4102714231305464}
   - component: {fileID: 212144444820636964}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tileset_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4272833347602726}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}

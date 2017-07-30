@@ -1,4 +1,20 @@
-﻿using System.Collections;
+﻿/* AI-Bot Problem is a puzzle game where you switch AIs between bots.
+ * Copyright (C) 2017  Jens Pitkänen
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -70,7 +86,7 @@ namespace AIBotProblem {
 
         public ConnectionBoard connectionBoard;
 
-        private int currentLevel = 4;
+        private int currentLevel = 0;
         private Dictionary<PathDesc, List<Vector2>> cachedPaths = new Dictionary<PathDesc, List<Vector2>>();
         private WorldTile[] grid;
         private bool[] powerGrid;
@@ -165,7 +181,8 @@ namespace AIBotProblem {
                     }
                     // This check makes the void tiles not appear graphically (while still being technically floors)
                     if (cell != 'v') {
-                        GameObject tile = Instantiate(tilePrefabs[(int)grid[x + y * width]], transform);
+                        GameObject tile = Instantiate(tilePrefabs[(int)grid[x + y * width]]);
+                        tile.transform.parent = transform;
                         tile.transform.localPosition = new Vector3(x, y);
                         if (cell == 'd') {
                             doors[x + y * width] = tile.GetComponent<Door>();

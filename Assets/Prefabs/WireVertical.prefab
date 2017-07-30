@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4730142043106138}
   - component: {fileID: 212072542127672410}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tileset_8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4592890440623230}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WireVertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}

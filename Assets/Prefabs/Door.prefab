@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4943805729970068}
   - component: {fileID: 212918950437413934}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tileset_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4911131632168434}
   - component: {fileID: 212525139699266850}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tileset_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4171905168991448}
   - component: {fileID: 114245550166855644}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4511265515938946}
   - component: {fileID: 114304558220806838}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Detector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4960636890577264}
   - component: {fileID: 212858125220767858}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tileset_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,6 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 512173ba928d19a4babf6fc9e5ab3f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  toggle: 0
 --- !u!212 &212858125220767858
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4689650096540708}
   - component: {fileID: 212833966830189256}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tileset_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4838826715138088}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LightRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
