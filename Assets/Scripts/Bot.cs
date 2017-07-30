@@ -23,8 +23,9 @@ namespace AIBotProblem {
         public AIType aiType;
         public float direction = 0;
         public bool moving = false;
-        public Material whiteMat;
         public MeshRenderer meshRenderer;
+        public SfxPlayer sfxMove;
+        public GameObject fixingNotification;
 
         private AIBase AI;
         private float currentDirectionRadians = 0f;
@@ -46,13 +47,14 @@ namespace AIBotProblem {
                     moving = AI.moving;
 
                     if (moving) {
+                        sfxMove.Play();
                         Vector3 movement = new Vector3(Mathf.Cos(AI.direction * Mathf.Deg2Rad), Mathf.Sin(AI.direction * Mathf.Deg2Rad));
                         int x = Mathf.RoundToInt(transform.localPosition.x + movement.x);
                         int y = Mathf.RoundToInt(transform.localPosition.y + movement.y);
                         if (hostWorld.IsSpaceFree(x, y, this)) {
-                            hostWorld.ExitTile(targetPosition);
+                            hostWorld.ExitTile(targetPosition, this);
                             targetPosition = transform.localPosition + movement;
-                            hostWorld.EnterTile(targetPosition);
+                            hostWorld.EnterTile(targetPosition, this);
                         }
                     } 
                 }

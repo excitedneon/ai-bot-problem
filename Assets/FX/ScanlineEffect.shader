@@ -4,7 +4,7 @@
 	{
 		_MainTex ("Texture", 2D) = "white" {}
 		_ScreenHeight ("Screen Height", Range(0, 512)) = 256
-		_Darkening ("Screen Height", Range(0, 0.9)) = 0.1
+		_Darkening ("Darkening", Range(0, 0.9)) = 0.1
 	}
 	SubShader
 	{

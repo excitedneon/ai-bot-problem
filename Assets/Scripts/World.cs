@@ -39,6 +39,13 @@ namespace AIBotProblem {
 
     public class World : MonoBehaviour {
         private static string[] levels = new string[]{
+            "#TEXT#\n" +
+            "AI-Bot \n" +
+            "Problem\n" +
+            "\n" +
+            "<color=#aae>[P]lay</color>\n" +
+            "<color=#eaa>[Q]uit</color>\n",
+
             "#######\n" +
             "#     #\n" +
             "# b x #\n" +
@@ -80,17 +87,28 @@ namespace AIBotProblem {
             "vvvv##### #vvv\n" +
             "vvvv#xr   #vvv\n" +
             "vvvv# x   #vvv\n" +
-            "vvvv#######vvv\n"
+            "vvvv#######vvv\n",
+
+            "#TEXT#\n" +
+            "The power is\n" +
+            "no longer\n" +
+            "out.\n" +
+            "\n" +
+            "<color=#aae>[M]ain menu</color>\n"
         };
 
         public GameObject[] tilePrefabs;
         public bool[] tileSolid;
         public bool[] tilePowered;
         public GameObject botPrefab;
+        public TextMesh textMesh;
+        public SfxPlayer sfxSwitch;
+        public SfxPlayer sfxSwitchOff;
+        public SfxPlayer sfxSuccess;
 
         public ConnectionBoard connectionBoard;
 
-        private int currentLevel = 3;
+        private int currentLevel = 0;
         private Dictionary<PathDesc, List<Vector2>> cachedPaths = new Dictionary<PathDesc, List<Vector2>>();
         private WorldTile[] grid;
         private bool[] powerGrid;
@@ -111,7 +129,7 @@ namespace AIBotProblem {
             if (winTime < 0 && generatorCount > 0 && generatorsOn == generatorCount) {
                 winTime = Time.time;
             }
-            if (winTime > 0 && Time.time - winTime > .6f) {
+            if (winTime > 0 && Time.time - winTime > 3.4f) {
                 if (currentLevel + 1 >= levels.Length) {
                     // Win
                 } else {
@@ -122,6 +140,25 @@ namespace AIBotProblem {
             if (Input.GetButtonDown("Restart")) {
                 Load(levels[currentLevel]);
             }
+
+            if (currentLevel == 0 && Input.GetKeyUp("p")) {
+                Play();
+            }
+            if ((currentLevel == 0 || currentLevel == levels.Length - 1) && Input.GetKeyUp("q")) {
+                Quit();
+            }
+            if (currentLevel == levels.Length - 1 && Input.GetKeyUp("m")) {
+                MainMenu();
+            }
+
+            if (Application.isEditor) {
+                for (int i = 0; i < levels.Length; i++) {
+                    if (Input.GetKeyUp("" + i )) {
+                        currentLevel = i;
+                        Load(levels[currentLevel]);
+                    }
+                }
+            }
         }
 
         private void Load(string level) {
@@ -130,83 +167,98 @@ namespace AIBotProblem {
                 Destroy(transform.GetChild(i).gameObject);
             }
             connectionBoard.Reset();
-
-            string[] rows = level.Split('\n');
-            height = rows.Length;
-            width = rows[0].Length;
-            grid = new WorldTile[width * height];
-            powerGrid = new bool[width * height];
+            CameraManager.Set(new Vector2());
+            CameraManager.SetZoom(7);
             doors.Clear();
             detectors.Clear();
             bots = new List<Bot>();
             generatorCount = 0;
             generatorsOn = 0;
-            int x = 0;
-            int y = 0;
-            foreach (string row in rows) {
-                foreach (char cell in row.ToCharArray()) {
-                    switch (cell) {
-                        case 'b':
-                            // Spawn bot
-                            GameObject spawnedBot = Instantiate(botPrefab, transform);
-                            spawnedBot.transform.localPosition = new Vector3(x, y);
-                            Bot bot = spawnedBot.GetComponent<Bot>();
-                            bot.hostWorld = this;
-                            if (bots.Count == 0) {
-                                bot.SetWhite();
-                            }
-                            bots.Add(bot);
-                            connectionBoard.AddBot(bot);
-                            grid[x + y * width] = WorldTile.Floor;
-                            break;
-                        default:
-                            grid[x + y * width] = WorldTile.Floor;
-                            break;
-                        case '#':
-                            grid[x + y * width] = WorldTile.Wall;
-                            break;
-                        case 'x':
-                            grid[x + y * width] = WorldTile.Generator;
-                            generatorCount++;
-                            break;
-                        case 'r':
-                            grid[x + y * width] = WorldTile.LightRed;
-                            break;
-                        case 'y':
-                            grid[x + y * width] = WorldTile.LightYellow;
-                            break;
-                        case 's':
-                            grid[x + y * width] = WorldTile.Detector;
-                            break;
-                        case 'd':
-                            grid[x + y * width] = WorldTile.Door;
-                            break;
-                        case '-':
-                            grid[x + y * width] = WorldTile.WireHorizontal;
-                            break;
-                        case '|':
-                            grid[x + y * width] = WorldTile.WireVertical;
-                            break;
-                        case '+':
-                            grid[x + y * width] = WorldTile.WireOmni;
-                            break;
-                    }
-                    // This check makes the void tiles not appear graphically (while still being technically floors)
-                    if (cell != 'v') {
-                        GameObject tile = Instantiate(tilePrefabs[(int)grid[x + y * width]]);
-                        tile.transform.parent = transform;
-                        tile.transform.localPosition = new Vector3(x, y);
-                        if (cell == 'd') {
-                            doors[x + y * width] = tile.GetComponent<Door>();
-                        }
-                        if (cell == 's') {
-                            detectors[x + y * width] = tile.GetComponent<Detector>();
-                        }
-                    }
-                    x++;
+            textMesh.text = "";
+
+            string[] rows = level.Split('\n');
+
+            if (rows[0].Equals("#TEXT#")) {
+                // The level is text, display
+                for (int i = 1; i < rows.Length; i++) {
+                    textMesh.text += rows[i];
+                    if (i < rows.Length - 2) textMesh.text += "\n";
                 }
-                x = 0;
-                y++;
+            } else {
+                // The level is an actual level, setup
+                height = rows.Length;
+                width = rows[0].Length;
+                grid = new WorldTile[width * height];
+                powerGrid = new bool[width * height];
+                CameraManager.Set(new Vector2(width / 2f, height / 2f));
+
+                int x = 0;
+                int y = 0;
+                foreach (string row in rows) {
+                    foreach (char cell in row.ToCharArray()) {
+                        switch (cell) {
+                            case 'b':
+                                // Spawn bot
+                                GameObject spawnedBot = Instantiate(botPrefab, transform);
+                                spawnedBot.transform.localPosition = new Vector3(x, y);
+                                Bot bot = spawnedBot.GetComponent<Bot>();
+                                bot.hostWorld = this;
+                                if (bots.Count == 0) {
+                                    bot.SetWhite();
+                                }
+                                bots.Add(bot);
+                                connectionBoard.AddBot(bot);
+                                grid[x + y * width] = WorldTile.Floor;
+                                break;
+                            default:
+                                grid[x + y * width] = WorldTile.Floor;
+                                break;
+                            case '#':
+                                grid[x + y * width] = WorldTile.Wall;
+                                break;
+                            case 'x':
+                                grid[x + y * width] = WorldTile.Generator;
+                                generatorCount++;
+                                break;
+                            case 'r':
+                                grid[x + y * width] = WorldTile.LightRed;
+                                break;
+                            case 'y':
+                                grid[x + y * width] = WorldTile.LightYellow;
+                                break;
+                            case 's':
+                                grid[x + y * width] = WorldTile.Detector;
+                                break;
+                            case 'd':
+                                grid[x + y * width] = WorldTile.Door;
+                                break;
+                            case '-':
+                                grid[x + y * width] = WorldTile.WireHorizontal;
+                                break;
+                            case '|':
+                                grid[x + y * width] = WorldTile.WireVertical;
+                                break;
+                            case '+':
+                                grid[x + y * width] = WorldTile.WireOmni;
+                                break;
+                        }
+                        // This check makes the void tiles not appear graphically (while still being technically floors)
+                        if (cell != 'v') {
+                            GameObject tile = Instantiate(tilePrefabs[(int)grid[x + y * width]]);
+                            tile.transform.parent = transform;
+                            tile.transform.localPosition = new Vector3(x, y);
+                            if (cell == 'd') {
+                                doors[x + y * width] = tile.GetComponent<Door>();
+                            }
+                            if (cell == 's') {
+                                detectors[x + y * width] = tile.GetComponent<Detector>();
+                            }
+                        }
+                        x++;
+                    }
+                    x = 0;
+                    y++;
+                }
             }
         }
 
@@ -228,7 +280,7 @@ namespace AIBotProblem {
             return !tileSolid[(int)grid[index]];
         }
 
-        public void EnterTile(Vector2 position) {
+        public void EnterTile(Vector2 position, Bot who) {
             int x = Mathf.RoundToInt(position.x);
             int y = Mathf.RoundToInt(position.y);
             if (x < 0 || x >= width || y < 0 || y >= height) {
@@ -237,14 +289,17 @@ namespace AIBotProblem {
             int index = x + y * width;
             if (detectors.ContainsKey(index)) {
                 detectors[index].toggle = true;
+                sfxSwitch.Play();
                 SpreadPower(new Vector2(x, y), true);
             }
             if (grid[index] == WorldTile.Generator) {
+                who.fixingNotification.SetActive(true);
+                sfxSuccess.Play();
                 generatorsOn++;
             }
         }
 
-        public void ExitTile(Vector2 position) {
+        public void ExitTile(Vector2 position, Bot who) {
             int x = Mathf.RoundToInt(position.x);
             int y = Mathf.RoundToInt(position.y);
             if (x < 0 || x >= width || y < 0 || y >= height) {
@@ -253,9 +308,11 @@ namespace AIBotProblem {
             int index = x + y * width;
             if (detectors.ContainsKey(index)) {
                 detectors[index].toggle = false;
+                sfxSwitchOff.Play();
                 SpreadPower(new Vector2(x, y), false);
             }
             if (grid[index] == WorldTile.Generator) {
+                who.fixingNotification.SetActive(false);
                 generatorsOn--;
             }
         }
@@ -363,6 +420,27 @@ namespace AIBotProblem {
                 cachedPaths[desc] = path;
             }
             return cachedPaths[desc];
+        }
+
+        public int GetCurrentLevel() {
+            return currentLevel;
+        }
+
+        public bool IsWinning() {
+            return winTime >= 0;
+        }
+
+        public void Play() {
+            Load(levels[++currentLevel]);
+        }
+
+        public void Quit() {
+            Application.Quit();
+        }
+
+        public void MainMenu() {
+            currentLevel = 0;
+            Load(levels[currentLevel]);
         }
     }
 }

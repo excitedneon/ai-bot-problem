@@ -24,7 +24,7 @@ namespace AIBotProblem {
         private WorldTile seekingFor;
         private float distance;
 
-        public SeekingAI(float direction, bool moving, Bot host, WorldTile seekingFor, float distance = 2) : base(direction, moving, host) {
+        public SeekingAI(float direction, bool moving, Bot host, WorldTile seekingFor, float distance = 2.9f) : base(direction, moving, host) {
             this.seekingFor = seekingFor;
             this.distance = distance;
         }

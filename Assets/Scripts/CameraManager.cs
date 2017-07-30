@@ -25,9 +25,8 @@ namespace AIBotProblem {
         public Camera cam;
         public Vector3 offset;
 
-
         void Update() {
-            zoomLevel = Mathf.Clamp(zoomLevel - Input.GetAxis("Mouse ScrollWheel") * 3, 1, 11);
+            zoomLevel = Mathf.Clamp(zoomLevel - Input.GetAxis("Mouse ScrollWheel") * 4, 1, 11);
             position.z = -zoomLevel;
             cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, position + offset, 0.3f);
         }
@@ -38,6 +37,10 @@ namespace AIBotProblem {
         
         public static void Set(Vector2 position) {
             CameraManager.position = position;
+        }
+
+        public static void SetZoom(float zoomLevel) {
+            CameraManager.zoomLevel = zoomLevel;
         }
 
         public static void Move(Vector2 moveAmount) {
