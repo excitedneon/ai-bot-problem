@@ -38,10 +38,6 @@ namespace AIBotProblem {
         }
 
         private void Update() {
-            foreach (Bot bot in bots) {
-                bot.hoverEffect.SetActive(false);
-            }
-
             RaycastHit hit;
             Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit);
             if (hit.collider != null && hit.collider.name.Equals("IOCollider")) {
@@ -49,7 +45,7 @@ namespace AIBotProblem {
                 bool isIn = name.StartsWith("In");
                 int num = isIn ? int.Parse(name.Substring(2)) : int.Parse(name.Substring(3));
                 if (isIn && num < bots.Count) {
-                    bots[num].hoverEffect.SetActive(true);
+                    CameraManager.Set(bots[num].transform.localPosition);
                 }
                 if (Input.GetButtonDown("Interact")) {
                     Click(num + (isIn ? 0 : inputCount));
@@ -58,16 +54,16 @@ namespace AIBotProblem {
             
             if (line != null) {
                 if (Input.GetButton("Interact Secondary")) {
-                    if (lastIn) {
-                        bots[lastNum].aiType = AIType.Dead;
-                    }
                     Destroy(line.gameObject);
                     line = null;
                     lastIn = false;
                     lastNum = -1;
                     plugOutSfx.Play();
-                } else {
-                    Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    if (lastIn) {
+                        bots[lastNum].aiType = AIType.Dead;
+                    }
+                } else if (hit.collider != null) {
+                    Vector3 point = hit.point;
                     point.z = line.GetPosition(1).z;
                     line.SetPosition(1, point);
                 }
@@ -109,14 +105,15 @@ namespace AIBotProblem {
             } else {
                 lastIn = isIn;
                 lastNum = num;
-                if (line == null && createdLines[n] == null && (!isIn || num < bots.Count)) {
+                bool shouldPickupLine = line == null && (!isIn || num < bots.Count);
+                if (shouldPickupLine && createdLines[n] == null) {
                     GameObject newLine = Instantiate(linePrefab);
                     line = newLine.GetComponent<LineRenderer>();
                     line.positionCount = 2;
                     line.SetPosition(0, position);
                     line.SetPosition(1, position);
                     plugInSfx.Play();
-                } else if (line == null) {
+                } else if (shouldPickupLine) {
                     line = createdLines[n];
                     createdLines[n] = null;
                     if (line.GetPosition(0) == position) {

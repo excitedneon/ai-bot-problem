@@ -19,16 +19,16 @@ using UnityEngine;
 
 namespace AIBotProblem {
     public class Detector : Toggleable {
+        public Transform flippable;
+
         void Update() {
+            Vector3 rotation = flippable.localEulerAngles;
             if (toggle) {
-                Vector3 scale = transform.localScale;
-                scale = Vector3.Lerp(scale, new Vector3(1.25f, 1.25f, 1.25f), 0.4f);
-                transform.localScale = scale;
+                rotation.z = 180;
             } else {
-                Vector3 scale = transform.localScale;
-                scale = Vector3.Lerp(scale, new Vector3(1f, 1f, 1f), 0.6f);
-                transform.localScale = scale;
+                rotation.z = 0;
             }
+            flippable.localEulerAngles = rotation;
         }
     }
 }

@@ -23,7 +23,8 @@ namespace AIBotProblem {
         public AIType aiType;
         public float direction = 0;
         public bool moving = false;
-        public GameObject hoverEffect;
+        public Material whiteMat;
+        public MeshRenderer meshRenderer;
 
         private AIBase AI;
         private float currentDirectionRadians = 0f;
@@ -93,6 +94,10 @@ namespace AIBotProblem {
                 }
             }
             lastAIType = aiType;
+        }
+
+        public void SetWhite() {
+            meshRenderer.materials[2].SetColor("_EmissionColor", new Color(0.95f, 0.95f, 0.95f));
         }
     }
 }

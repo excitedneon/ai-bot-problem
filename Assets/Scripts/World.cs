@@ -40,11 +40,15 @@ namespace AIBotProblem {
     public class World : MonoBehaviour {
         private static string[] levels = new string[]{
             "#######\n" +
+            "#     #\n" +
             "# b x #\n" +
+            "#     #\n" +
             "#######\n",
 
             "#############\n" +
+            "#           #\n" +
             "# b     y x #\n" +
+            "#           #\n" +
             "#############\n",
 
             "###########\n" +
@@ -86,7 +90,7 @@ namespace AIBotProblem {
 
         public ConnectionBoard connectionBoard;
 
-        private int currentLevel = 0;
+        private int currentLevel = 3;
         private Dictionary<PathDesc, List<Vector2>> cachedPaths = new Dictionary<PathDesc, List<Vector2>>();
         private WorldTile[] grid;
         private bool[] powerGrid;
@@ -108,7 +112,11 @@ namespace AIBotProblem {
                 winTime = Time.time;
             }
             if (winTime > 0 && Time.time - winTime > .6f) {
-                Load(levels[++currentLevel]);
+                if (currentLevel + 1 >= levels.Length) {
+                    // Win
+                } else {
+                    Load(levels[++currentLevel]);
+                }
                 winTime = -1;
             }
             if (Input.GetButtonDown("Restart")) {
@@ -144,6 +152,10 @@ namespace AIBotProblem {
                             spawnedBot.transform.localPosition = new Vector3(x, y);
                             Bot bot = spawnedBot.GetComponent<Bot>();
                             bot.hostWorld = this;
+                            if (bots.Count == 0) {
+                                bot.SetWhite();
+                            }
+                            bots.Add(bot);
                             connectionBoard.AddBot(bot);
                             grid[x + y * width] = WorldTile.Floor;
                             break;

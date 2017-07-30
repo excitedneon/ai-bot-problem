@@ -19,14 +19,30 @@ using UnityEngine;
 
 namespace AIBotProblem {
     public class MouseDrag : MonoBehaviour {
-        public CameraZoomer cameraZoomer;
         public float speed = 1;
 
+        private bool dragging = false;
+
         void Update() {
-            if (Input.GetButton("Interact")) {
-                Vector3 movement = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * speed * cameraZoomer.GetMultiplier();
-                transform.localPosition = transform.localPosition + movement;
+            if (Input.GetButtonDown("Interact")) {
+                RaycastHit hit;
+                Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit);
+                if (hit.collider != null && hit.collider.name.Equals("Screen")) {
+                    Drag();
+                    dragging = true;
+                }
             }
+            if (Input.GetButton("Interact") && dragging) {
+                Drag();
+            }
+            if (Input.GetButtonUp("Interact")) {
+                dragging = false;
+            }
+        }
+
+        private void Drag() {
+            Vector3 movement = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * speed * CameraManager.GetZoom();
+            CameraManager.Move(-movement);
         }
     }
 }
