@@ -1850,6 +1850,7 @@ GameObject:
   - component: {fileID: 1722201453}
   - component: {fileID: 1722201452}
   - component: {fileID: 1722201450}
+  - component: {fileID: 1722201449}
   m_Layer: 0
   m_Name: BotRenderer
   m_TagString: Untagged
@@ -1857,6 +1858,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1722201449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1722201448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28f6371d573261a44bbb8999a59f271d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectMat: {fileID: 2100000, guid: d4a02dfdca4d006488edee8dcbe77324, type: 2}
 --- !u!114 &1722201450
 MonoBehaviour:
   m_ObjectHideFlags: 0
