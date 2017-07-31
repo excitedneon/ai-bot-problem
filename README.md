@@ -1,6 +1,6 @@
 AI-Bot Problem
 ==============
-Puzzle game where you switch AIs between bots. Made for Ludum Dare 39, with the theme "Running out of Power."
+Switch AIs between bots to solve puzzles with them. Made for Ludum Dare 39, with the theme "Running out of Power."
 
 Downloads
 ---------
