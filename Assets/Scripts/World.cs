@@ -426,6 +426,10 @@ namespace AIBotProblem {
             return currentLevel;
         }
 
+        public int GetLevelCount() {
+            return levels.Length;
+        }
+
         public bool IsWinning() {
             return winTime >= 0;
         }

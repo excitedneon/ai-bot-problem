@@ -24,6 +24,7 @@ namespace AIBotProblem {
         public SfxPlayer plugOutSfx;
         public GameObject linePrefab;
         public int inputCount = 6;
+        public World world;
 
         private List<Bot> bots;
         private int lastNum = -1;
@@ -40,15 +41,28 @@ namespace AIBotProblem {
         private void Update() {
             RaycastHit hit;
             Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit);
-            if (hit.collider != null && hit.collider.name.Equals("IOCollider")) {
-                string name = hit.collider.transform.parent.name;
-                bool isIn = name.StartsWith("In");
-                int num = isIn ? int.Parse(name.Substring(2)) : int.Parse(name.Substring(3));
-                if (isIn && num < bots.Count) {
-                    CameraManager.Set(bots[num].transform.localPosition);
+            if (hit.collider != null) {
+                if (hit.collider.name.Equals("IOCollider")) {
+                    string name = hit.collider.transform.parent.name;
+                    bool isIn = name.StartsWith("In");
+                    int num = isIn ? int.Parse(name.Substring(2)) : int.Parse(name.Substring(3));
+                    if (isIn && num < bots.Count) {
+                        CameraManager.Set(bots[num].transform.localPosition);
+                    }
+                    if (Input.GetButtonDown("Interact")) {
+                        Click(num + (isIn ? 0 : inputCount));
+                    }
                 }
-                if (Input.GetButtonDown("Interact")) {
-                    Click(num + (isIn ? 0 : inputCount));
+                if (hit.collider.name.StartsWith("Menu") && Input.GetButtonUp("Interact")) {
+                    if (hit.collider.name.EndsWith("0") && world.GetCurrentLevel() == 0) {
+                        world.Play();
+                    }
+                    if (hit.collider.name.EndsWith("1") && world.GetCurrentLevel() == 0) {
+                        world.Quit();
+                    }
+                    if (hit.collider.name.EndsWith("1") && world.GetCurrentLevel() == world.GetLevelCount() - 1) {
+                        world.MainMenu();
+                    }
                 }
             }
             

@@ -26,7 +26,7 @@ namespace AIBotProblem {
         void Update() {
             if (Input.GetButtonDown("Interact")) {
                 RaycastHit hit;
-                Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit);
+                Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, 1 << 5);
                 if (hit.collider != null && hit.collider.name.Equals("Screen")) {
                     Drag();
                     dragging = true;
