@@ -89,6 +89,25 @@ namespace AIBotProblem {
             "vvvv# x   #vvv\n" +
             "vvvv#######vvv\n",
 
+            "#############vvvv\n" +
+            "#   #   #   #vvvv\n" +
+            "# b     y s #vvvv\n" +
+            "#   #   # | #vvvv\n" +
+            "#####   ##+##vvvv\n" +
+            "#+--d     |#vvvvv\n" +
+            "#|  #+----+#vvvvv\n" +
+            "#|  #+######vvvvv\n" +
+            "#|  d r #########\n" +
+            "#|b #+  #   #   #\n" +
+            "#+---+s # # # # #\n" +
+            "#####     # # # #\n" +
+            "vvvv# x ###   # #\n" +
+            "vvvv#   #v##### #\n" +
+            "vvvv#####vvv#   #\n" +
+            "vvvvvvvvvvvv# xr#\n" +
+            "vvvvvvvvvvvv#   #\n" +
+            "vvvvvvvvvvvv#####\n",
+
             "#TEXT#\n" +
             "The power is\n" +
             "no longer\n" +

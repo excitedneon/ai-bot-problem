@@ -71,34 +71,29 @@ namespace AIBotProblem {
         private int currentTutorial = -1;
 
         void Update() {
+            currentTutorial = -1;
             if (world.GetCurrentLevel() == 1) {
                 currentTutorial = 0;
-                UpdateDisplay();
             }
             if (world.GetCurrentLevel() == 2) {
                 currentTutorial = 2;
-                UpdateDisplay();
             }
             if (world.GetCurrentLevel() == 3) {
                 currentTutorial = 3;
-                UpdateDisplay();
             }
             if (world.GetCurrentLevel() == 4) {
                 currentTutorial = 4;
-                UpdateDisplay();
             }
             if (world.GetCurrentLevel() == 5) {
                 currentTutorial = 5;
-                UpdateDisplay();
             }
-            if (world.GetCurrentLevel() == 6) {
+            if (world.GetCurrentLevel() == 7) {
                 currentTutorial = 6;
-                UpdateDisplay();
             }
             if (world.IsWinning()) {
                 currentTutorial = 1;
-                UpdateDisplay();
             }
+            UpdateDisplay();
         }
 
         private void UpdateDisplay() {
