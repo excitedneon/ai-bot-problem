@@ -4,7 +4,7 @@ Switch AIs between bots to solve puzzles with them. Made for Ludum Dare 39, with
 
 Downloads
 ---------
-Will be available at [nc.itch.io](https://nc.itch.io) upon release.
+You can download the game on [itch.io](https://nc.itch.io/ai-bot-problem)!
 
 Development
 -----------
