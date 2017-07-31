@@ -3611,15 +3611,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2105300576}
-  m_Text: 'The power is
-
-    out. A few
-
-    bots remain.
-
-    Restore
-
-    power.'
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 0.4
   m_LineSpacing: 1
