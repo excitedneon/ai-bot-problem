@@ -3613,13 +3613,13 @@ TextMesh:
   m_GameObject: {fileID: 2105300576}
   m_Text: 'The power is
 
-    no longer
+    out. A few
 
-    out.
+    bots remain.
 
-    [O]ther btn
+    Restore
 
-    [M]ain menu'
+    power.'
   m_OffsetZ: 0
   m_CharacterSize: 0.4
   m_LineSpacing: 1

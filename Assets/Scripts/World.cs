@@ -46,6 +46,13 @@ namespace AIBotProblem {
             "<color=#aae>[P]lay</color>\n" +
             "<color=#eaa>[Q]uit</color>\n",
 
+            "#TEXT#\n" +
+            "The power is\n" +
+            "out. A few\n" +
+            "bots remain.\n" +
+            "Restore\n\n" +
+            "power.",
+
             "#######\n" +
             "#     #\n" +
             "# b x #\n" +
@@ -104,7 +111,7 @@ namespace AIBotProblem {
             "vvvv# x ###   # #\n" +
             "vvvv#   #v##### #\n" +
             "vvvv#####vvv#   #\n" +
-            "vvvvvvvvvvvv# xr#\n" +
+            "vvvvvvvvvvvv# xy#\n" +
             "vvvvvvvvvvvv#   #\n" +
             "vvvvvvvvvvvv#####\n",
 
@@ -199,6 +206,9 @@ namespace AIBotProblem {
 
             if (rows[0].Equals("#TEXT#")) {
                 // The level is text, display
+                if (currentLevel == 1) {
+                    winTime = Time.time;
+                }
                 for (int i = 1; i < rows.Length; i++) {
                     textMesh.text += rows[i];
                     if (i < rows.Length - 2) textMesh.text += "\n";
