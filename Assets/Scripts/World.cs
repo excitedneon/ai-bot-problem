@@ -170,7 +170,7 @@ namespace AIBotProblem {
             if (currentLevel == 0 && Input.GetKeyUp("p")) {
                 Play();
             }
-            if ((currentLevel == 0 || currentLevel == levels.Length - 1) && Input.GetKeyUp("q")) {
+            if (Input.GetButtonUp("Exit") || ((currentLevel == 0 || currentLevel == levels.Length - 1) && Input.GetKeyUp("q"))) {
                 Quit();
             }
             if (currentLevel == levels.Length - 1 && Input.GetKeyUp("m")) {
