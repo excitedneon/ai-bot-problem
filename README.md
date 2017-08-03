@@ -8,7 +8,9 @@ You can download the game on [itch.io](https://nc.itch.io/ai-bot-problem)!
 
 Development
 -----------
-Open this directory as a project in [Unity3D](https://unity3d.com). If you want to build your own distributable, select File->Build Settings..., select your platform and preferred options, and press Build.
+1. Install [VRTK](https://github.com/thestonefox/VRTK) and [SteamVR](https://www.assetstore.unity3d.com/en/#!/content/32647) (or the Oculus SDK if you're using a Rift) into Assets/AssetStoreTools.
+2. Open this directory as a project in [Unity3D](https://unity3d.com).
+3. If you want to build your own distributable, select File->Build Settings..., select your platform and preferred options, and press Build.
 
 Credits
 -------
